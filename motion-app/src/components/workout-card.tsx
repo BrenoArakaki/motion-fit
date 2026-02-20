@@ -1,6 +1,7 @@
-import { Dumbbell } from "lucide-react";
+import { Dumbbell, Ellipsis } from "lucide-react";
 import ProgressCircle from "./progressbar";
 import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 
 interface Props {
   name: string;
@@ -23,25 +24,17 @@ export default function WorkoutCard({ name, sets, progress }: Props) {
 
   return (
     <div
-      className="
-        bg-zinc-800/60
-        backdrop-blur-xl
-        border border-zinc-700
-        hover:border-emerald-500/40
-        rounded-2xl
-        p-6
-        transition-all
-        duration-300
-        hover:shadow-lg hover:shadow-emerald-500/10
+      className="p-5 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 backdrop-blur-xl hover:bg-white/5 transition-all
       "
     >
       <div className="flex justify-between items-center">
         {/* LEFT SIDE */}
-        <div className="flex space-y-2">
-          <div className="p-2 rounded-lg  bg-zinc-700/60">
-            <Dumbbell size={18} className="text-emerald-400" />
+        <div className="flex space-y-2 gap-2 items-center">
+          <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 shadow-lg">
+            <Dumbbell size={28} className="text-emerald-400" />
           </div>
-          <div className="flex flex-col items-center gap-3">
+
+          <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold uppercase tracking-wide">
               {name}
             </h2>
@@ -50,20 +43,29 @@ export default function WorkoutCard({ name, sets, progress }: Props) {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-4">
           {/* STATUS BADGE */}
           <Badge
             className={`
-              h-8
-                px-3
-              font-medium
-              rounded-full
-              ${getStatusColor()}
-            `}
+      h-8 px-4
+      rounded-full
+      text-xs font-semibold tracking-wide
+      backdrop-blur-md
+      ${getStatusColor()}
+    `}
           >
             {getStatus()}
           </Badge>
-          <ProgressCircle progress={progress} />
+
+          {/* PROGRESS */}
+          <div className="p-2">
+            <ProgressCircle progress={progress} />
+          </div>
+
+          {/* MENU BUTTON */}
+          <Button variant="ghost" size="icon">
+            <Ellipsis size={20} />
+          </Button>
         </div>
       </div>
     </div>
