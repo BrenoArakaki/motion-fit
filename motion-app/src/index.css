@@ -45,7 +45,7 @@
 
 :root {
   /* 🎯 BASE DISCORD STYLE */
-  --background: #313338;            /* grafite escuro */
+  --background: oklch(0.321 0.009 268.4);  /* grafite escuro (convertido de #313338) */
   --foreground: oklch(0.90 0 0);           /* branco suave */
 
   --card: oklch(0.21 0 0);
@@ -64,11 +64,14 @@
   --muted: oklch(0.25 0 0);
   --muted-foreground: oklch(0.7 0 0);
 
-  /* 🟢 Accent verde mais suave */
-  --accent: #22C55E;
-  --accent-foreground: oklch(1 0 0);
+  /* 🟢 Accent verde mais suave — antes era quase idêntico ao primary
+     (mesmo hue, mesma luminosidade); agora tem menos chroma e mais
+     luminosidade pra realmente funcionar como uma variação "suave" */
+  --accent: oklch(0.68 0.12 149.6);
+  --accent-foreground: oklch(0.15 0 0);
 
   --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
 
   --border: oklch(1 0 0 / 8%);
   --input: oklch(1 0 0 / 12%);
@@ -94,7 +97,6 @@
   --sidebar-border: oklch(1 0 0 / 8%);
   --sidebar-ring: oklch(0.75 0.23 145);
 }
-
 
 .dark {
   --background: oklch(0.129 0.042 264.695);

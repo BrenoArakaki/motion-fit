@@ -1,15 +1,37 @@
-import { Dumbbell, Ellipsis } from "lucide-react";
+import { Dumbbell, Ellipsis, Trash2 } from "lucide-react";
 import ProgressCircle from "./progressbar";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import type { Exercise } from "@/types/workout";
 
 interface Props {
+  id: string;
   name: string;
-  sets: string;
+  sets: number;
   progress: number;
+  onStatusChange: (
+    id: string,
+    status: Exercise["status"],
+    progress: number,
+  ) => void;
+  onDelete: (id: string) => void;
 }
 
-export default function WorkoutCard({ name, sets, progress }: Props) {
+export default function WorkoutCard({
+  id,
+  name,
+  sets,
+  progress,
+  onStatusChange,
+  onDelete,
+}: Props) {
   const getStatus = () => {
     if (progress === 100) return "Completed";
     if (progress > 0) return "In progress";
@@ -38,7 +60,9 @@ export default function WorkoutCard({ name, sets, progress }: Props) {
             <h2 className="text-xl font-semibold uppercase tracking-wide">
               {name}
             </h2>
-            <p className="text-zinc-400 text-sm">{sets}</p>
+            <p className="text-zinc-400 text-sm">
+              {sets} {sets === 1 ? "set" : "sets"}
+            </p>
           </div>
         </div>
 
@@ -63,9 +87,38 @@ export default function WorkoutCard({ name, sets, progress }: Props) {
           </div>
 
           {/* MENU BUTTON */}
-          <Button variant="ghost" size="icon">
-            <Ellipsis size={20} />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Ellipsis size={20} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => onStatusChange(id, "pending", 0)}
+              >
+                Marcar como não iniciado
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => onStatusChange(id, "in_progress", 50)}
+              >
+                Marcar como em progresso
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => onStatusChange(id, "completed", 100)}
+              >
+                Marcar como concluído
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => onDelete(id)}
+                className="text-red-400 focus:text-red-400"
+              >
+                <Trash2 size={16} className="mr-2" />
+                Excluir
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </div>

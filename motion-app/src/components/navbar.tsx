@@ -1,22 +1,29 @@
 import { Bell, Flame } from "lucide-react";
-import { NavLink } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import MotionLogo from "@/assets/MotionLogo.png";
 import { Badge } from "./ui/badge";
+import { getStreak } from "@/services/workoutServices";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const { user } = useAuth();
 
-  const linkBase =
-    "px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg";
+  const [streak, setStreak] = useState<number | null>(null);
 
-  const active = "text-white bg-white/10";
+  useEffect(() => {
+    async function loadStreak() {
+      if (!user) return;
 
-  const inactive = "text-neutral-400 hover:text-white hover:bg-white/5";
+      const currentStreak = await getStreak(user.uid);
+      setStreak(currentStreak);
+    }
+
+    loadStreak();
+  }, [user]);
 
   return (
     <header className="top-0 left-0 w-full z-50 bg-neutral-900/80 backdrop-blur-xl border-b border-white/20">
-      <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
+      <div className="mx-auto px-8 h-16 flex items-center justify-between">
         {/* LEFT */}
         <div className="flex items-center gap-2">
           {/* Logo */}
@@ -37,7 +44,9 @@ export default function Navbar() {
           {/* Streak Badge */}
           <Badge className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20">
             <Flame size={16} className="text-orange-400" />
-            <span className="text-xs text-orange-300 font-medium">5 days</span>
+            <span className="text-xs text-orange-300 font-medium">
+              {streak ?? 0} days
+            </span>
           </Badge>
 
           {/* Notification */}

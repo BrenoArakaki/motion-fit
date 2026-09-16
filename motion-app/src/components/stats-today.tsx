@@ -1,7 +1,19 @@
-import { Dumbbell, Flame, ListChecks, Ellipsis } from "lucide-react";
+import { Dumbbell, Flame, ListChecks, Ellipsis, Heart } from "lucide-react";
 import StatCard from "./stat-card";
 
-export default function StatsToday() {
+interface StatsTodayProps {
+  completedExercises: number;
+  totalExercises: number;
+  totalSets: number;
+  estimatedCalories: number;
+}
+
+export default function StatsToday({
+  completedExercises,
+  totalExercises,
+  totalSets,
+  estimatedCalories,
+}: StatsTodayProps) {
   return (
     <div className="">
       {/* Header */}
@@ -23,26 +35,44 @@ export default function StatsToday() {
         <StatCard
           icon={<Dumbbell className="text-emerald-400 w-5 h-5" />}
           title="Workouts"
-          value="3"
-          suffix="/ 3"
+          value={String(completedExercises)}
+          suffix={`/ ${totalExercises}`}
           color="emerald"
         />
 
         <StatCard
           icon={<ListChecks className="text-orange-400 w-5 h-5" />}
           title="Total Sets"
-          value="12"
+          value={String(totalSets)}
           color="orange"
         />
 
         <StatCard
           icon={<Flame className="text-red-400 w-5 h-5" />}
           title="Calories"
-          value="450"
-          suffix="kcal"
+          value={String(estimatedCalories)}
+          suffix="kcal (est.)"
           color="red"
         />
       </div>
+
+      {/* Upcoming — ainda estático: não existe feature de agendamento
+          de treino no banco hoje. Se quiser isso funcionando de verdade,
+          precisa de uma coleção nova (ex: users/{uid}/scheduled) com
+          data/hora e tipo de treino. */}
+      <div className="flex items-center gap-3 mt-6">
+        <div className="flex items-center justify-center">
+          <div className="w-2 h-2 bg-amber-400 rounded-full" />
+        </div>
+        <h2 className="text-xl font-semibold text-white">Upcoming</h2>
+      </div>
+      <StatCard
+        icon={<Heart className="text-red-400 w-5 h-5" />}
+        title="Cardio"
+        value="10:30"
+        suffix="pm"
+        color="red"
+      />
     </div>
   );
 }

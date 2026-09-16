@@ -18,7 +18,7 @@ function Login() {
 
   return (
     <div className="h-[100vh] overflow-y-hidden bg-gradient-to-br from-neutral-700 via-neutral-950 to-black flex items-center justify-center">
-      <div className="grid grid-cols-2 items-center justify-center">
+      <div className="grid grid-cols-2 items-center justify-center ">
         <div className="flex flex-col w-full gap-3">
           <div className="space-y-4 text-center">
             <h1
